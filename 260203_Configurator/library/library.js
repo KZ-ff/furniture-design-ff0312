@@ -256,7 +256,7 @@ async function boot(user) {
 
 AuthApi.onAuthStateChanged(auth, (user) => {
     if (!user) {
-        window.location.replace("./index.html");
+        window.location.replace("../index.html");
         return;
     }
     boot(user);
