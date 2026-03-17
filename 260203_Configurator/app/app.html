@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Configurator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/app-styles.css">
+</head>
+
+<body>
+    <div id="layout-root">
+
+        <!-- Sidebar — flex sibling of viewport so it pushes the canvas -->
+        <nav id="sidebar" class="sidebar">
+
+            <!-- 1. Open Sidebar (toggle) -->
+            <button id="btnSidebarToggle" class="nav-toggle-btn" title="Toggle sidebar">
+                <i data-lucide="panel-left"></i>
+                <span class="nav-label">Open Sidebar</span>
+            </button>
+
+            <!-- 3. Camera Parameters -->
+            <div class="nav-section">
+                <button class="nav-section-btn" data-target="nav-camera" title="Camera Parameters">
+                    <i data-lucide="sliders-horizontal"></i>
+                    <span class="nav-label">Camera Parameters</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                </button>
+                <div id="nav-camera" class="nav-submenu hidden">
+                    <div class="submenu-inner">
+                        <div class="submenu-header">
+                            <span>Parameters</span>
+                            <button id="btnResetCamera" class="panel-reset-btn">Reset</button>
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <label for="sHeight">Height</label>
+                                <span id="vHeight" class="slider-value">0.0</span>
+                            </div>
+                            <input id="sHeight" type="range" min="-5" max="5" step="0.1" value="0">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <label for="sRot">Rotation</label>
+                                <span id="vRot" class="slider-value">0°</span>
+                            </div>
+                            <input id="sRot" type="range" min="-3.14" max="3.14" step="0.01" value="0">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <label for="sScale">Distance</label>
+                                <span id="vScale" class="slider-value">0.0</span>
+                            </div>
+                            <input id="sScale" type="range" min="-8" max="8" step="0.1" value="0">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-label-row">
+                                <label for="sTilt">Tilt</label>
+                                <span id="vTilt" class="slider-value">0°</span>
+                            </div>
+                            <input id="sTilt" type="range" min="-1.2" max="1.2" step="0.01" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. AI Prompt -->
+            <div class="nav-section">
+                <button class="nav-section-btn" data-target="nav-chat" title="AI Prompt">
+                    <i data-lucide="message-square"></i>
+                    <span class="nav-label">AI Prompt</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                </button>
+                <div id="nav-chat" class="nav-submenu hidden">
+                    <div class="submenu-inner">
+                        <div id="chatMessages" class="chat-messages"></div>
+                        <div class="chat-input-area">
+                            <textarea id="chatInput" class="chat-textarea" rows="3"
+                                placeholder="Describe what you want… (Enter to send, Shift+Enter for newline)"></textarea>
+                            <button id="chatSend" class="chat-send-btn">
+                                <i data-lucide="send"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. System Workflow -->
+            <div class="nav-section">
+                <button class="nav-section-btn" data-target="nav-workflow" title="System Workflow">
+                    <i data-lucide="layers"></i>
+                    <span class="nav-label">System Workflow</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                </button>
+                <div id="nav-workflow" class="nav-submenu hidden">
+                    <div class="submenu-inner nav-workflow-inner">
+                        <img src="../assets/panels/workflow.jpg" alt="System Workflow"
+                             class="workflow-thumb"
+                             id="workflowThumb"
+                             draggable="false">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connection Status (bottom) -->
+            <div class="nav-section nav-connection-section">
+                <button class="nav-section-btn" data-target="nav-connection" title="Connection Status">
+                    <i data-lucide="link" class="nav-conn-icon"></i>
+                    <span id="connectionDot" class="connection-dot"></span>
+                    <span class="nav-label">
+                        <span id="statusText">—</span>
+                        <span class="status-sep"> · </span>
+                        <span id="selectedName">None</span>
+                    </span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                </button>
+                <div id="nav-connection" class="nav-submenu hidden">
+                    <div class="submenu-inner nav-placeholder">Connection info</div>
+                </div>
+            </div>
+
+        </nav>
+
+        <!-- Left: 3D viewport -->
+        <div id="viewport-area">
+            <div id="viewport"></div>
+
+            <div id="ui-root">
+                <!-- Tools toolbar (bottom right, vertical) -->
+                <div class="panel toolbar">
+                    <button id="btnMove" class="toolbar-btn active">
+                        <span class="toolbar-icon"><i data-lucide="move"></i></span>
+                        <span class="toolbar-label">Move</span>
+                    </button>
+                    <button id="btnRotate" class="toolbar-btn">
+                        <span class="toolbar-icon"><i data-lucide="rotate-ccw"></i></span>
+                        <span class="toolbar-label">Rotate</span>
+                    </button>
+                    <button id="btnScale" class="toolbar-btn">
+                        <span class="toolbar-icon"><i data-lucide="maximize-2"></i></span>
+                        <span class="toolbar-label">Scale</span>
+                    </button>
+                </div>
+
+                <p class="viewport-hint">Drag on empty space to orbit the view. Select an object to move it.</p>
+            </div>
+        </div>
+
+        <!-- Right: panels (3/8) -->
+        <div id="right-panel">
+
+            <!-- Upper 1/4: AI Prompt chat -->
+            <div id="right-chat-panel">
+                <div class="right-panel-header">
+                    <i data-lucide="message-square"></i>
+                    <span>AI Prompt</span>
+                </div>
+                <div id="rightChatMessages" class="chat-messages right-chat-messages"></div>
+                <div class="chat-input-area">
+                    <textarea id="rightChatInput" class="chat-textarea right-chat-textarea" rows="3"
+                        placeholder="Describe what you want… (Enter to send, Shift+Enter for newline)">I want to design a shelf in my bedroom. I have 30 books, and the largest one is A4 size. Besides the books, I also want to store other items on it. I'm 170cm tall, so please make it as convenient as possible for me to get items. And I like light colors.</textarea>
+                    <button id="rightChatSend" class="chat-send-btn">
+                        <i data-lucide="send"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Middle 2/4: Rendered image -->
+            <div id="right-render-panel">
+                <img id="renderImg" src="../assets/panels/render.png" alt="Render" draggable="false" onerror="this.style.display='none'">
+            </div>
+
+            <!-- Bottom 1/4: Dimension diagram -->
+            <div id="right-dims-panel">
+                <img id="dimsImg" src="../assets/panels/dims.png" alt="Dimensions" draggable="false" onerror="this.style.display='none'">
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Workflow lightbox -->
+    <div id="workflowLightbox" class="workflow-lightbox hidden">
+        <button id="workflowLightboxClose" class="workflow-lightbox-close" title="Close">
+            <i data-lucide="x"></i>
+        </button>
+        <div class="workflow-lightbox-scroll">
+            <img src="../assets/panels/workflow.jpg" alt="System Workflow" class="workflow-lightbox-img">
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.182.0/examples/jsm/"
+  }
+}
+</script>
+    <script type="module" src="./app.js"></script>
+</body>
+
+</html>

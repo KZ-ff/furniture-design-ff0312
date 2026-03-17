@@ -1,0 +1,671 @@
+.info-row{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon-btn{
+  margin: 4px;
+  background: white;
+  border: 1px solid rgba(255,255,255,0.65);
+  border-radius: 10px;
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  width: 34px;
+  height: 34px;
+}
+
+.icon-btn:focus-visible{
+  outline: 2px solid rgba(255,255,255,0.9);
+  outline-offset: 2px;
+}
+
+.icon-btn i, .icon-btn svg{
+  width: 18px;
+  height: 18px;
+  color: rgb(81,81,81);
+}
+
+.icon-btn svg{
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+.hidden{ display: none !important; }
+
+/* Info status row */
+.info-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Connection dot — works for both <div> (background) and <circle> (fill) */
+.connection-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(100, 100, 100, 0.3);
+  fill: rgba(100, 100, 100, 0.3);
+  flex-shrink: 0;
+  transition: background 0.35s, fill 0.35s;
+}
+
+.connection-dot.connected {
+  background: #22c55e;
+  fill: #22c55e;
+}
+
+.connection-dot.connecting {
+  background: #f59e0b;
+  fill: #f59e0b;
+  animation: dot-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.32; }
+}
+
+/* Status text */
+.status-text {
+  font-size: 11px;
+  color: rgba(81, 81, 81, 0.7);
+  letter-spacing: 0.1px;
+  font-variant-numeric: tabular-nums;
+}
+
+#statusText {
+  text-transform: capitalize;
+}
+
+.status-sep {
+  font-size: 11px;
+  color: rgba(81, 81, 81, 0.28);
+}
+
+/* Selected name */
+.selected-name {
+  font-size: 11px;
+  color: rgba(81, 81, 81, 0.7);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 110px;
+}
+
+/* Toolbar — vertical stack, bottom-right of viewport */
+.panel.toolbar {
+  bottom: 32px;
+  right: 24px;
+  left: auto;
+  transform: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 10px;
+  background: none;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* Circular toolbar buttons */
+.toolbar-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.toolbar-btn.active {
+  background: none;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.toolbar-btn.active .toolbar-icon {
+  background: rgba(255, 255, 255, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.toolbar-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.toolbar-btn:hover .toolbar-icon {
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.toolbar-btn.active .toolbar-icon {
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.toolbar-icon i,
+.toolbar-icon svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.toolbar-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+  letter-spacing: 0.2px;
+}
+
+.viewport-hint {
+  position: absolute;
+  bottom: 112px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.28);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Icon button hover */
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* Camera cursor while orbiting/panning the viewport */
+body.dragging-cam,
+body.dragging-cam * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23515151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z'/%3E%3Ccircle cx='12' cy='13' r='4'/%3E%3C/svg%3E") 12 12, move !important;
+}
+
+/* Hand cursor while dragging an object with TransformControls */
+body.dragging-obj,
+body.dragging-obj * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23515151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2'/%3E%3Cpath d='M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2'/%3E%3Cpath d='M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8'/%3E%3Cpath d='M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15'/%3E%3C/svg%3E") 12 4, grab !important;
+}
+
+/* Reset button inside panel header */
+.panel-reset-btn {
+  margin-left: auto;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: rgba(81, 81, 81, 0.8);
+  cursor: pointer;
+  line-height: 1.6;
+  transition: background 0.12s, color 0.12s;
+}
+
+.panel-reset-btn:hover {
+  background: rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.loading-spinner{
+  --p: 0;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid rgba(255,255,255,0.65);
+  margin: 4px;
+  position: relative;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(81,81,81,0.9);
+  font-variant-numeric: tabular-nums;
+}
+
+.loading-spinner::before{
+  content: "";
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: conic-gradient(rgba(81,81,81,0.95) calc(var(--p) * 1%), rgba(81,81,81,0.12) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
+}
+
+.loading-spinner::after{
+  content: attr(data-pct);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.loading-spinner[data-pct="100"]::after{
+  content: "";
+  opacity: 0;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  flex-shrink: 0;
+  width: 44px;
+  overflow: hidden;
+  transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+  background: #f7f7f7;
+  border-right: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  z-index: 20;
+  pointer-events: auto;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.sidebar.expanded {
+  width: 272px;
+}
+
+/* Override generic button styles inside sidebar (no padding reset — nav buttons set their own) */
+.sidebar button {
+  background: none;
+  color: rgba(0, 0, 0, 0.68);
+  border: none;
+  border-radius: 0;
+}
+
+.sidebar button:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Collapsed: hide labels + chevrons only (padding stays, keeps icon at same x) */
+.sidebar:not(.expanded) .nav-label,
+.sidebar:not(.expanded) .nav-chevron {
+  display: none;
+}
+
+/* Nav toggle, back, and section buttons */
+.nav-toggle-btn,
+.nav-item-btn,
+.nav-section-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 13px;
+  height: 44px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: left;
+  flex-shrink: 0;
+  transition: background 0.12s;
+}
+
+/* Icons inside nav buttons */
+.nav-toggle-btn i,
+.nav-toggle-btn svg,
+.nav-item-btn i,
+.nav-item-btn svg,
+.nav-section-btn i,
+.nav-section-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+/* Connection dot in nav */
+.nav-conn-dot {
+  flex-shrink: 0;
+}
+
+/* Nav label */
+.nav-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Chevron */
+.nav-chevron {
+  margin-left: auto !important;
+  flex-shrink: 0;
+  width: 14px !important;
+  height: 14px !important;
+  opacity: 0.45;
+  transition: transform 0.2s;
+}
+
+.nav-section.open > .nav-section-btn .nav-chevron {
+  transform: rotate(180deg);
+}
+
+/* Thin divider */
+.nav-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
+  margin: 4px 16px;
+  flex-shrink: 0;
+}
+
+/* Submenu container */
+.nav-submenu {
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.nav-submenu.hidden {
+  display: none;
+}
+
+/* Submenu inner padding */
+.submenu-inner {
+  padding: 8px 16px 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Submenu mini-header (e.g. Parameters + Reset button) */
+.submenu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.38);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Workflow thumbnail in sidebar submenu */
+.nav-workflow-inner {
+  padding: 8px;
+}
+
+.workflow-thumb {
+  width: 100%;
+  border-radius: 6px;
+  cursor: zoom-in;
+  display: block;
+  opacity: 0.88;
+  transition: opacity 0.15s;
+}
+
+.workflow-thumb:hover {
+  opacity: 1;
+}
+
+/* Workflow lightbox */
+.workflow-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+}
+
+.workflow-lightbox.hidden {
+  display: none;
+}
+
+.workflow-lightbox-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 80%;
+  padding: 48px 0 48px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent;
+  scrollbar-color: rgba(255,255,255,0.25) transparent;
+}
+
+.workflow-lightbox-img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+.workflow-lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  background: none;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.workflow-lightbox-close:hover {
+  opacity: 1;
+}
+
+.workflow-lightbox-close svg {
+  width: 16px;
+  height: 16px;
+  stroke: #fff;
+}
+
+/* Placeholder text inside submenus */
+.nav-placeholder {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.38);
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Connection icon — red = disconnected by default (needs 2 classes to beat .sidebar button) */
+.nav-connection-section .nav-conn-icon {
+  color: #ef4444;
+  transition: color 0.35s;
+}
+
+/* State-only span: hidden, only used by CSS :has() */
+.nav-connection-section .connection-dot {
+  display: none;
+}
+
+/* Connected → green */
+.nav-connection-section:has(.connection-dot.connected) .nav-conn-icon {
+  color: #22c55e;
+}
+
+/* Connecting → amber */
+.nav-connection-section:has(.connection-dot.connecting) .nav-conn-icon {
+  color: #f59e0b;
+}
+
+/* Pin connection section to bottom (above spinner) */
+.nav-connection-section {
+  margin-top: auto;
+}
+
+
+/* ===== SPLIT LAYOUT ===== */
+#layout-root {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+#viewport-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+#viewport {
+  position: absolute;
+  inset: 0;
+}
+
+#viewport canvas {
+  filter: saturate(1.10) hue-rotate(-5deg);
+}
+
+/* ===== RIGHT PANEL ===== */
+#right-panel {
+  width: 36vw;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f7;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  pointer-events: auto;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: sans-serif;
+  padding: 16px;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+#right-chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+  gap: 8px;
+  overflow: hidden;
+  min-height: 0;
+  background: white;
+  border-radius: 12px;
+}
+
+.right-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.72);
+  flex-shrink: 0;
+}
+
+.right-panel-header i,
+.right-panel-header svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  color: rgba(81, 81, 81, 0.8);
+}
+
+.right-chat-messages {
+  flex: 1;
+  min-height: 0;
+  height: auto !important;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.right-chat-messages:empty {
+  display: none;
+}
+
+.right-chat-textarea {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #b0b0b0;
+}
+
+#right-render-panel {
+  flex: 2;
+  overflow: hidden;
+  min-height: 0;
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+}
+
+#right-dims-panel {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+#right-render-panel img,
+#right-dims-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Hide img when src missing / broken, show placeholder label instead */
+#right-render-panel img:not([src]),
+#right-render-panel img[src=""],
+#right-dims-panel img:not([src]),
+#right-dims-panel img[src=""] {
+  display: none;
+}
+
+.panel-placeholder-label {
+  position: absolute;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+  user-select: none;
+}
