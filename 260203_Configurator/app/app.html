@@ -91,7 +91,21 @@
                 </div>
             </div>
 
-            <!-- 5. System Workflow -->
+            <!-- 5. Shelf Inspirations -->
+            <div class="nav-section">
+                <button class="nav-section-btn" data-target="nav-inspirations" title="Shelf Inspirations">
+                    <i data-lucide="sparkles"></i>
+                    <span class="nav-label">Shelf Inspirations</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                </button>
+                <div id="nav-inspirations" class="nav-submenu hidden">
+                    <div class="submenu-inner nav-inspirations-inner">
+                        <img src="../assets/inspirations/1.png" alt="Inspiration 1" class="inspiration-thumb" data-index="0" draggable="false">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. System Workflow -->
             <div class="nav-section">
                 <button class="nav-section-btn" data-target="nav-workflow" title="System Workflow">
                     <i data-lucide="layers"></i>
@@ -183,6 +197,22 @@
 
         </div>
 
+    </div>
+
+    <!-- Shelf Inspirations lightbox -->
+    <div id="inspirationLightbox" class="inspiration-lightbox hidden">
+        <button id="inspirationLightboxClose" class="workflow-lightbox-close" title="Close">
+            <i data-lucide="x"></i>
+        </button>
+        <button id="inspirationPrev" class="inspiration-nav inspiration-prev" title="Previous">
+            <i data-lucide="chevron-left"></i>
+        </button>
+        <div class="inspiration-lightbox-content">
+            <img id="inspirationLightboxImg" src="" alt="Shelf Inspiration">
+        </div>
+        <button id="inspirationNext" class="inspiration-nav inspiration-next" title="Next">
+            <i data-lucide="chevron-right"></i>
+        </button>
     </div>
 
     <!-- Workflow lightbox -->

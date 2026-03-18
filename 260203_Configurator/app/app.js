@@ -47,6 +47,51 @@ document.querySelectorAll(".nav-section-btn").forEach(btn => {
     });
 });
 
+// Shelf Inspirations lightbox
+const inspirationImages = [
+    "../assets/inspirations/1.png"
+];
+let currentInspirationIndex = 0;
+
+const inspirationLightbox    = document.getElementById("inspirationLightbox");
+const inspirationLightboxImg = document.getElementById("inspirationLightboxImg");
+const inspirationClose       = document.getElementById("inspirationLightboxClose");
+const inspirationPrev        = document.getElementById("inspirationPrev");
+const inspirationNext        = document.getElementById("inspirationNext");
+
+function showInspirationAt(index) {
+    currentInspirationIndex = (index + inspirationImages.length) % inspirationImages.length;
+    inspirationLightboxImg.src = inspirationImages[currentInspirationIndex];
+}
+
+document.querySelectorAll(".inspiration-thumb").forEach(img => {
+    img.addEventListener("click", () => {
+        showInspirationAt(parseInt(img.dataset.index));
+        inspirationLightbox.classList.remove("hidden");
+    });
+});
+
+if (inspirationClose) {
+    inspirationClose.addEventListener("click", () => inspirationLightbox.classList.add("hidden"));
+}
+if (inspirationPrev) {
+    inspirationPrev.addEventListener("click", () => showInspirationAt(currentInspirationIndex - 1));
+}
+if (inspirationNext) {
+    inspirationNext.addEventListener("click", () => showInspirationAt(currentInspirationIndex + 1));
+}
+if (inspirationLightbox) {
+    inspirationLightbox.addEventListener("click", (e) => {
+        if (e.target === inspirationLightbox) inspirationLightbox.classList.add("hidden");
+    });
+    window.addEventListener("keydown", (e) => {
+        if (inspirationLightbox.classList.contains("hidden")) return;
+        if (e.key === "ArrowLeft")  showInspirationAt(currentInspirationIndex - 1);
+        if (e.key === "ArrowRight") showInspirationAt(currentInspirationIndex + 1);
+        if (e.key === "Escape")     inspirationLightbox.classList.add("hidden");
+    });
+}
+
 // Workflow lightbox
 const workflowLightbox = document.getElementById("workflowLightbox");
 const workflowThumb    = document.getElementById("workflowThumb");

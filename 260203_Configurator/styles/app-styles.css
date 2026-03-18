@@ -530,6 +530,91 @@ body.dragging-obj * {
   margin-top: auto;
 }
 
+/* ===== SHELF INSPIRATIONS ===== */
+.nav-inspirations-inner {
+  padding: 8px;
+}
+
+.inspiration-thumb {
+  width: 100%;
+  border-radius: 6px;
+  cursor: zoom-in;
+  display: block;
+  opacity: 0.88;
+  transition: opacity 0.15s;
+}
+
+.inspiration-thumb:hover {
+  opacity: 1;
+}
+
+/* Inspiration lightbox */
+.inspiration-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inspiration-lightbox.hidden {
+  display: none;
+}
+
+.inspiration-lightbox-content {
+  max-width: 78vw;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inspiration-lightbox-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: 8px;
+  display: block;
+  object-fit: contain;
+}
+
+.inspiration-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10000;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.inspiration-nav:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.inspiration-prev { left: 24px; }
+.inspiration-next { right: 24px; }
+
+.inspiration-nav svg {
+  width: 20px;
+  height: 20px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2;
+}
+
 
 /* ===== SPLIT LAYOUT ===== */
 #layout-root {
